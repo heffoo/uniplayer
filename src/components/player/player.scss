@@ -1,0 +1,52 @@
+@use "/src/styles/colors.scss" as colors;
+
+.player-body {
+  height: 85px;
+  background-color: colors.$gray-3;
+  padding: 10px;
+  border-top: 1px solid gray;
+}
+
+.control-button {
+  background-color: transparent;
+  color: gray;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  transform: scale(3);
+  margin: 20px;
+  &:hover {
+    transform: scale(3.3);
+  }
+  &:nth-child(2) {
+    margin-right: 15px;
+  }
+}
+
+.player-button {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.track-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 30px;
+}
+
+.track-title {
+  color: colors.$gray-4;
+}
+
+.track-singer {
+  color: colors.$gray-5;
+}
+
+.player__track-info {
+  padding: 10px;
+}

@@ -1,0 +1,38 @@
+@use "/src/styles/colors.scss" as colors;
+
+.playlist-content {
+  background-color: colors.$gray-3;
+  flex-grow: 1;
+}
+
+.playlist-name {
+  color: colors.$gray-4;
+}
+
+.playlist-song {
+  padding: 10px 0;
+  border-bottom: 1px solid black;
+  &__title {
+    font-size: 18px;
+    color: colors.$gray-4;
+    @media (min-width: 1700px) {
+      font-size: 28px;
+    }
+  }
+
+  &__singer {
+    color: colors.$gray-1;
+    @media (min-width: 1700px) {
+      font-size: 26px;
+    }
+  }
+}
+
+.playlist-button-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.playlist-divider {
+  color: colors.$gray-1;
+}

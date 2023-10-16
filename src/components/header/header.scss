@@ -1,0 +1,15 @@
+@use "/src/styles/colors.scss" as colors;
+
+.header {
+  max-height: 50px;
+  background-color: colors.$gray-3;
+  color: colors.$gray-1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__logo {
+    max-width: 120px;
+    max-height: 30px;
+  }
+}
