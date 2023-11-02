@@ -53,19 +53,51 @@ export const tracks = [
 
 export const playlists = [
   {
-    id: 1,
-    name: "Плейлист 1",
+    id: "1",
+    title: "Плейлист 1",
   },
   {
-    id: 2,
-    name: "Плейлист 2",
+    id: "2",
+    title: "Плейлист 2",
   },
   {
-    id: 3,
-    name: "Плейлист 3",
+    id: "3",
+    title: "Плейлист 3",
   },
   {
-    id: 4,
-    name: "Плейлист 4",
+    id: "4",
+    title: "Плейлист 4",
+  },
+];
+
+// radio france - http://icecast.radiofrance.fr/fip-midfi.mp3
+//synth radio - http://77.51.212.205:8005/live192
+//европа плюс - https://ep256.hostingradio.ru:8052/europaplus256.mp3
+//казак фм - https://radio.mediacdn.ru/kazak_fm.mp3
+//максимум - https://maximum.hostingradio.ru/maximum96.aacp
+export const radio_stations = [
+  {
+    id: "synth_radio",
+    title: "Synth Radio",
+    src: "http://77.51.212.205:8005/live192",
+    cover: "./assets/synth.jpg",
+  },
+  {
+    id: "maximum",
+    title: "MAXIMUM",
+    src: "https://maximum.hostingradio.ru/maximum96.aacp",
+    cover: "./assets/maximum.jpg",
+  },
+  {
+    id: "europe_plus",
+    title: "Европа плюс",
+    src: "https://ep256.hostingradio.ru:8052/europaplus256.mp3",
+    cover: "./assets/europe-plus.jpg",
+  },
+  {
+    id: "kazak_fm",
+    title: "Казак FM",
+    src: "https://radio.mediacdn.ru/kazak_fm.mp3",
+    cover: "./assets/kazak.jpg",
   },
 ];

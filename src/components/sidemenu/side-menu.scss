@@ -11,10 +11,12 @@
     color: colors.$gray-5;
     font-size: 18px;
     padding: 5px 0;
-    text-align: center;
     border: 1px solid black;
     &:hover {
       cursor: pointer;
+      background-color: colors.$gold-2;
+    }
+    &--active {
       background-color: colors.$gold-2;
     }
   }

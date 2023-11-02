@@ -1,7 +1,7 @@
 @use "/src/styles/colors.scss" as colors;
 
 .player-body {
-  height: 85px;
+  height: 13vh;
   background-color: colors.$gray-3;
   padding: 10px;
   border-top: 1px solid gray;
@@ -14,12 +14,18 @@
   outline: 0;
   cursor: pointer;
   transform: scale(3);
-  margin: 20px;
   &:hover {
     transform: scale(3.3);
   }
-  &:nth-child(2) {
-    margin-right: 15px;
+}
+
+.player-controls {
+  & > .player-button {
+    & > img {
+      margin: 0;
+      padding: 5px 7px;
+      transform: scale(2);
+    }
   }
 }
 
@@ -27,9 +33,14 @@
   background-color: transparent;
   border: 0;
   cursor: pointer;
+  outline: 0;
 
   &:hover {
     transform: scale(1.05);
+  }
+
+  &--disabled {
+    opacity: 0.4;
   }
 }
 
@@ -49,4 +60,41 @@
 
 .player__track-info {
   padding: 10px;
+}
+
+.progressbar {
+  height: 10px;
+  width: 600px;
+  background-color: colors.$gray-5;
+}
+
+.progress {
+  height: 10px;
+  background-color: colors.$gold-1;
+}
+
+.time {
+  color: colors.$gray-6;
+}
+
+#myRange {
+  width: 80px; /* Устанавливаем ширину слайдера */
+  height: 3px; /* Устанавливаем высоту полоски */
+  -webkit-appearance: none;
+  appearance: none;
+  background: colors.$gray-5; /* Цвет фона полоски */
+  border-radius: 3px; /* Закругляем углы полоски */
+  outline: none;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+#myRange::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px; /* Устанавливаем ширину кружка */
+  height: 10px; /* Устанавливаем высоту кружка */
+  background: colors.$gray-5; /* Цвет кружка */
+  border-radius: 50%; /* Делаем кружок круглым */
+  cursor: pointer;
 }

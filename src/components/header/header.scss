@@ -1,7 +1,7 @@
 @use "/src/styles/colors.scss" as colors;
 
 .header {
-  max-height: 50px;
+  max-height: 5vh;
   background-color: colors.$gray-3;
   color: colors.$gray-1;
   display: flex;

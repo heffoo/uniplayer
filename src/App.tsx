@@ -7,18 +7,20 @@ import { Playlist } from "./components/playlist/Playlist";
 import "./App.scss";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
+import { LoginPage } from "./components/login/LoginPage";
 
 function App() {
   return (
     <Provider store={store}>
-      <Layout>
+      {/* <Layout>
         <Header />
         <Row style={{ minHeight: "calc(100vh - 18vh)" }}>
           <SideMenu />
           <Playlist />
         </Row>
         <Player />
-      </Layout>
+      </Layout> */}
+      <LoginPage />
     </Provider>
   );
 }

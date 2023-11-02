@@ -1,0 +1,71 @@
+@use "/src/styles/colors.scss" as colors;
+
+.login-page {
+  height: 100vh;
+  width: 100vw;
+  background-color: colors.$gray-3;
+}
+
+.welcome-text {
+  color: colors.$gray-6;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+.login-button.ant-typography {
+  outline: 0;
+  background-color: transparent;
+  border: 0;
+  color: colors.$gray-6;
+  font-size: 1.3em;
+  &:hover {
+    color: colors.$gold-1;
+  }
+  &.active {
+    color: colors.$gold-1;
+  }
+}
+
+.login-divider {
+  background-color: colors.$gray-5;
+  height: 35px;
+}
+
+.register-form,
+.login-form {
+  width: 300px;
+  & > .ant-form-item > .ant-form-item-row {
+    &
+      > .ant-form-item-control
+      > .ant-form-item-control-input
+      > .ant-form-item-control-input-content
+      > .ant-input {
+      background-color: colors.$gray-5;
+      outline: 0;
+    }
+    & > .ant-form-item-label > label {
+      color: colors.$gray-6;
+    }
+  }
+}
+
+.forgot-password-link.ant-typography {
+  color: colors.$gray-5;
+  font-size: 1.2em;
+}
+
+.login-button {
+  background-color: colors.$gray-2;
+  border: 0;
+  outline: 0;
+  color: colors.$gray-6;
+  padding: 0 40px;
+}
+
+.login-page__row {
+  padding-top: 5%;
+}
+
+.login-buttons-block {
+  margin-left: 125px;
+}

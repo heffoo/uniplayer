@@ -2,6 +2,8 @@ import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import thunk from "redux-thunk";
 import trackReducer from "./trackSlice";
+import playlistReducer from "./playlistSlice";
+import playerReducer from "./playerSlice";
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
@@ -11,7 +13,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 >;
 
 export const store = configureStore({
-  reducer: { track: trackReducer },
+  reducer: { track: trackReducer, playlist: playlistReducer, player: playerReducer },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });
 

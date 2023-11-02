@@ -3,28 +3,37 @@
 .playlist-content {
   background-color: colors.$gray-3;
   flex-grow: 1;
+  height: 82vh;
 }
 
-.playlist-name {
+.playlist-name.ant-typography {
   color: colors.$gray-4;
 }
 
 .playlist-song {
   padding: 10px 0;
   border-bottom: 1px solid black;
-  &__title {
-    font-size: 18px;
-    color: colors.$gray-4;
-    @media (min-width: 1700px) {
-      font-size: 28px;
+  @media (max-width: 1600px) {
+    padding: 3px 0;
+  }
+  &__play-pause {
+    @media (max-width: 1600px) {
+      transform: scale(0.8);
     }
+  }
+  &__title {
+    font-size: 1.2em;
+    color: colors.$gray-4;
   }
 
   &__singer {
     color: colors.$gray-1;
-    @media (min-width: 1700px) {
-      font-size: 26px;
-    }
+    font-size: 1.1em;
+  }
+
+  &__button {
+    color: colors.$gray-1;
+    padding: 0 5px;
   }
 }
 
@@ -33,6 +42,23 @@
   height: 40px;
 }
 
-.playlist-divider {
+.playlist-divider.ant-divider {
   color: colors.$gray-1;
+  width: 6px;
+}
+
+.settings-dropdown.ant-dropdown {
+  background-color: colors.$gray-3;
+}
+
+.settings-dropdown.ant-dropdown > .ant-dropdown-menu {
+  background-color: colors.$gray-2;
+}
+.settings-dropdown.ant-dropdown > .ant-dropdown-menu > .ant-dropdown-menu-item {
+  color: colors.$gray-5;
+}
+
+.add-to-playlist-icon {
+  width: 18px;
+  height: 18px;
 }

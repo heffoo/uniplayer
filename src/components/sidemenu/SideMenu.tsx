@@ -1,25 +1,52 @@
 import { useMemo, useState } from "react";
-import { playlists } from "../../api/mocks";
+import { playlists, radio_stations } from "../../api/mocks";
 
 import "./side-menu.scss";
-import { radio_stations } from "../../constants";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { Playlist, RadioStation } from "../../types";
+import { Button, Row, Typography } from "antd";
+import { setPlaylist } from "../../store/playlistSlice";
+import classNames from "classnames";
+import { playTrack, setTrack } from "../../store/trackSlice";
 
 export const SideMenu = () => {
+  const currentPlaylist = useAppSelector(
+    (state) => state.playlist.currentPlaylist
+  );
   const [showPlaylists, setShowPlaylists] = useState<boolean>(true);
+  const dispatch = useAppDispatch();
 
   const allPlaylists = useMemo(() => {
     return [
       {
-        id: 1234,
-        name: "Все песни",
+        id: "1234",
+        title: "Все песни",
+        tracks: [],
       },
       {
-        id: 2234,
-        name: "Любимое",
+        id: "2234",
+        title: "Любимое",
+        tracks: [],
       },
       ...playlists,
     ];
   }, []);
+
+  const setCurrentPlaylist = (playlist: Playlist) => {
+    dispatch(setPlaylist(playlist));
+  };
+
+  const setActivePlaylist = (playlist: Playlist) => {
+    if (currentPlaylist) {
+      return playlist.id === currentPlaylist?.id;
+    }
+    return playlist.title === "Все песни";
+  };
+
+  const playRadioStation = async (radio_station: RadioStation) => {
+    await dispatch(setTrack(radio_station));
+    dispatch(playTrack());
+  };
 
   return (
     <div className="side-menu">
@@ -41,17 +68,29 @@ export const SideMenu = () => {
         {showPlaylists ? (
           <>
             {allPlaylists.map((playlist) => (
-              <div key={playlist.id} className="side-menu__item">
-                {playlist.name}
-              </div>
+              <Row
+                key={playlist.id}
+                justify="center"
+                className={classNames("side-menu__item", {
+                  "side-menu__item--active": setActivePlaylist(playlist),
+                })}
+                onClick={() => setCurrentPlaylist(playlist)}
+              >
+                {playlist.title}
+              </Row>
             ))}
           </>
         ) : (
           <>
             {radio_stations.map((radio_station) => (
-              <div key={radio_station.id} className="side-menu__item">
-                {radio_station.name}
-              </div>
+              <Row
+                key={radio_station.id}
+                justify="center"
+                className="side-menu__item"
+                onClick={() => playRadioStation(radio_station)}
+              >
+                {radio_station.title}
+              </Row>
             ))}
           </>
         )}
