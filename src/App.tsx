@@ -7,20 +7,26 @@ import { Playlist } from "./components/playlist/Playlist";
 import "./App.scss";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
+import { useState } from "react";
 import { LoginPage } from "./components/login/LoginPage";
 
 function App() {
+  const [isLogin, setIsLogin] = useState<boolean>(true);
+
   return (
     <Provider store={store}>
-      {/* <Layout>
-        <Header />
-        <Row style={{ minHeight: "calc(100vh - 18vh)" }}>
-          <SideMenu />
-          <Playlist />
-        </Row>
-        <Player />
-      </Layout> */}
-      <LoginPage />
+      {isLogin && (
+        <Layout>
+          <Header />
+          <Row style={{ minHeight: "calc(100vh - 18vh)" }}>
+            <SideMenu />
+            <Playlist />
+          </Row>
+          <Player />
+          <button onClick={() => setIsLogin(false)}></button>
+        </Layout>
+      )}
+      {!isLogin && <LoginPage />}
     </Provider>
   );
 }
