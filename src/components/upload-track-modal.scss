@@ -1,0 +1,32 @@
+@use "/src/styles/colors.scss" as colors;
+
+.upload-track-modal {
+  & .ant-modal-content {
+    background-color: colors.$gray-2;
+  }
+  & .ant-modal-header {
+    background-color: colors.$gray-2;
+    & .ant-modal-title {
+      color: colors.$gray-1;
+      font-weight: 400;
+    }
+  }
+}
+
+.drag-text {
+  color: colors.$gold-1;
+  text-decoration: underline;
+}
+
+.upload-track-form {
+  &__item {
+    border-radius: 0;
+    width: 300px;
+  }
+  &__cover.ant-upload-wrapper.ant-upload-picture-card-wrapper
+    .ant-upload.ant-upload-select {
+    width: 150px;
+    height: 150px;
+    margin: 30px;
+  }
+}

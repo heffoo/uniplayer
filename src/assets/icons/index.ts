@@ -13,3 +13,5 @@ export { default as InfinityIcon } from "./infinity.svg";
 export { default as MoreIcon } from "./more.svg";
 export { default as HeartIcon } from "./heart.svg";
 export { default as HeartFilledIcon } from "./heart-filled.svg";
+export { default as BinIcon } from "./bin.svg";
+export { default as UploadIcon } from "./upload.svg";

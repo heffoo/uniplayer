@@ -1,22 +1,38 @@
-import { Col, Divider, Dropdown, MenuProps, Row, Space, Typography } from "antd";
+import {
+  Col,
+  Divider,
+  Dropdown,
+  MenuProps,
+  Row,
+  Space,
+  Typography,
+} from "antd";
 import { tracks } from "../../api/mocks";
 import "./playlist.scss";
-import { useAppSelector } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 import { PlayPause } from "../shared/PlayPause";
 import { HeartIcon, MoreIcon, PlusIcon } from "../../assets/icons";
+import Link from "antd/es/typography/Link";
+import { setDrawerOpened } from "../../store/uiSlice";
 
 const { Title, Text } = Typography;
 //добавить в плейлист, отредактировать, удалить
 export const Playlist = () => {
+  const dispatch = useAppDispatch();
   const currentPlaylist = useAppSelector(
     (state) => state.playlist.currentPlaylist
   );
+
+  const openTrackInfo = async () => {
+    await dispatch(setDrawerOpened());
+  };
 
   const items: MenuProps["items"] = [
     {
       label: (
         <Space align="center">
-          Добавить в плейлист <img className="add-to-playlist-icon" alt="add" src={PlusIcon}></img>
+          Добавить в плейлист{" "}
+          <img className="add-to-playlist-icon" alt="add" src={PlusIcon}></img>
         </Space>
       ),
       key: "0",
@@ -48,6 +64,12 @@ export const Playlist = () => {
               <PlayPause className="playlist-song__play-pause" track={track} />
               <Col>
                 <Row>
+                  {/* <Link
+                    className="playlist-song__title"
+                    onClick={openTrackInfo}
+                  >
+                    {track.title}
+                  </Link> */}
                   <Text className="playlist-song__title">{track.title}</Text>
                 </Row>
                 <Text className="playlist-song__singer">

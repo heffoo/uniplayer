@@ -4,6 +4,7 @@ import thunk from "redux-thunk";
 import trackReducer from "./trackSlice";
 import playlistReducer from "./playlistSlice";
 import playerReducer from "./playerSlice";
+import uiReducer from "./uiSlice";
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
@@ -13,7 +14,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 >;
 
 export const store = configureStore({
-  reducer: { track: trackReducer, playlist: playlistReducer, player: playerReducer },
+  reducer: { track: trackReducer, playlist: playlistReducer, player: playerReducer, ui: uiReducer },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });
 

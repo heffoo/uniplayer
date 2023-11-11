@@ -13,3 +13,15 @@
     max-height: 30px;
   }
 }
+
+.upload-button {
+  background-color: transparent;
+  border: 0;
+  margin: 0 30px;
+  cursor: pointer;
+  transform: scale(0.8);
+
+  &:hover {
+    transform: scale(0.9);
+  }
+}

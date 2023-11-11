@@ -1,0 +1,27 @@
+import axios, { AxiosResponse } from "./axios";
+
+interface LoginParams {
+  username: string;
+  password: string;
+}
+
+export async function loginUser(params: LoginParams) {
+  const data = await axios.post("/signin", {
+    username: params.username,
+    password: params.password,
+  });
+  return data;
+}
+
+export async function registerUser(params: LoginParams) {
+  const data = await axios.post("/registration", {
+    username: params.username,
+    password: params.password,
+  });
+  return data;
+}
+
+export async function me() {
+  const data = await axios.get<LoginParams, any>("/users/me");
+  return data;
+}

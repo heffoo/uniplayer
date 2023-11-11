@@ -8,13 +8,11 @@ import {
   BackIcon,
   ForwardIcon,
   RepeatOneIcon,
-  PlayIcon,
   RepeatIcon,
   ShuffleIcon,
   VolumeOnIcon,
   NoShuffleIcon,
   VolumeOffIcon,
-  InfinityIcon,
 } from "../../assets/icons";
 import { playTrack, setTrack } from "../../store/trackSlice";
 import {
@@ -27,6 +25,7 @@ import { useAppDispatch, useAppSelector } from "../../store/store";
 import { PlayPause } from "../shared/PlayPause";
 import { Track } from "../../types";
 import classNames from "classnames";
+import { setDrawerOpened } from "../../store/uiSlice";
 //TODO: отключить кнопки "далее", если сейчас играет радио
 // radio france - http://icecast.radiofrance.fr/fip-midfi.mp3
 //synth radio - http://77.51.212.205:8005/live192
@@ -34,6 +33,8 @@ import classNames from "classnames";
 //казак фм - https://radio.mediacdn.ru/kazak_fm.mp3
 //максимум - https://maximum.hostingradio.ru/maximum96.aacp
 export const audio = createRef<HTMLAudioElement>();
+
+const { Link } = Typography
 
 export const Player = () => {
   const [progressBarPercent, setProgressBarPercent] = useState(0);
@@ -131,6 +132,10 @@ export const Player = () => {
     await dispatch(muteTrack());
   };
 
+  const openTrackInfo = async () => {
+    await dispatch(setDrawerOpened());
+  };
+
   return (
     <Row className="player-body" justify="space-between" align="middle">
       <Col span={4}>
@@ -160,9 +165,9 @@ export const Player = () => {
               </Col>
               <Col className="player__track-info">
                 <Row>
-                  <Typography.Text className="track-title">
+                  <Link className="track-title" onClick={openTrackInfo}>
                     {currentTrack.title}
-                  </Typography.Text>
+                  </Link>
                 </Row>
                 <Row>
                   <Typography.Text className="track-singer">

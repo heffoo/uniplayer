@@ -8,12 +8,14 @@ import { Button, Row, Typography } from "antd";
 import { setPlaylist } from "../../store/playlistSlice";
 import classNames from "classnames";
 import { playTrack, setTrack } from "../../store/trackSlice";
+import { BinIcon } from "../../assets/icons";
 
 export const SideMenu = () => {
   const currentPlaylist = useAppSelector(
     (state) => state.playlist.currentPlaylist
   );
   const [showPlaylists, setShowPlaylists] = useState<boolean>(true);
+  const [onPlaylistHover, setOnPlaylistHover] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
   const allPlaylists = useMemo(() => {
@@ -75,8 +77,13 @@ export const SideMenu = () => {
                   "side-menu__item--active": setActivePlaylist(playlist),
                 })}
                 onClick={() => setCurrentPlaylist(playlist)}
+                onMouseOver={() => setOnPlaylistHover(true)}
+                onMouseLeave={() => setOnPlaylistHover(false)}
               >
                 {playlist.title}
+                {/* {onPlaylistHover && (
+                  <img className="bin-icon" alt="bin" src={BinIcon} />
+                )} */}
               </Row>
             ))}
           </>

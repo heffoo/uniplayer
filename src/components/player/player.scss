@@ -50,8 +50,9 @@
   border-radius: 30px;
 }
 
-.track-title {
+.track-title.ant-typography {
   color: colors.$gray-4;
+  text-decoration: underline;
 }
 
 .track-singer {

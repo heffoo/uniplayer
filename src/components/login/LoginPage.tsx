@@ -12,18 +12,45 @@ import {
 import "./loginPage.scss";
 import { useState } from "react";
 import classNames from "classnames";
+import { loginUser, me, registerUser } from "../../api/login";
+import { useForm } from "antd/es/form/Form";
 
-const { Text, Link } = Typography;
+const { Link } = Typography;
 
 export const LoginPage = () => {
   const [authType, setAuthType] = useState<"register" | "auth">("register");
+  const [passwordIsDifferent, setPasswordIsDifferent] = useState(false);
+  const [form] = useForm();
 
   const register = () => {
-    return;
+    const formValues = form.getFieldsValue();
+    if (formValues.password === formValues.repeat_password) {
+      passwordIsDifferent && setPasswordIsDifferent(false);
+      registerUser({
+        username: formValues.username,
+        password: formValues.password,
+      })
+        .then(() => localStorage.setItem("isUserLogged", "true"))
+        .then(() => window.location.reload());
+    } else {
+      setPasswordIsDifferent(true);
+    }
+  };
+
+  const setUserName = async () => {
+    // await me().then((resp) => localStorage.setItem("username", resp.username));
   };
 
   const login = () => {
-    return;
+    const formValues = form.getFieldsValue();
+
+    loginUser({
+      username: formValues.username,
+      password: formValues.password,
+    })
+      .then(() => localStorage.setItem("isUserLogged", "true"))
+      .then(setUserName)
+      .then(() => window.location.reload());
   };
 
   return (
@@ -62,19 +89,34 @@ export const LoginPage = () => {
           </Row>
           <Row justify="center">
             {authType === "register" ? (
-              <Form name="register" layout="vertical" className="register-form">
+              <Form
+                form={form}
+                name="register"
+                layout="vertical"
+                className="register-form"
+              >
                 <Form.Item label="Логин" name="username">
                   <Input placeholder="Логин" />
                 </Form.Item>
                 <Form.Item label="Пароль" name="password">
                   <Input placeholder="Пароль" />
                 </Form.Item>
-                <Form.Item label="Повторите пароль" name="repeat-password">
+                <Form.Item
+                  label="Повторите пароль"
+                  name="repeat_password"
+                  validateStatus={passwordIsDifferent ? "error" : ""}
+                  hasFeedback
+                >
                   <Input placeholder="Пароль" />
                 </Form.Item>
               </Form>
             ) : (
-              <Form name="auth" layout="vertical" className="login-form">
+              <Form
+                form={form}
+                name="auth"
+                layout="vertical"
+                className="login-form"
+              >
                 <Form.Item label="Логин" name="username">
                   <Input placeholder="Логин" />
                 </Form.Item>
