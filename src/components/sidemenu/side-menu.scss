@@ -57,3 +57,24 @@
     }
   }
 }
+
+.add-playlist-button {
+  background-color: transparent;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.add-playlist-input {
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid black;
+  outline: 0;
+  height: 40px;
+  width: 200px;
+  font-size: 18px;
+  color: colors.$gray-5;
+}

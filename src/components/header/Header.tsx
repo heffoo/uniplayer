@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, MenuProps, Dropdown, Button, Tooltip } from "antd";
+import { Row, Col, MenuProps, Dropdown, Tooltip } from "antd";
 import { Header as AntHeader } from "antd/es/layout/layout";
 
 import "./header.scss";
@@ -42,7 +42,10 @@ export const Header = () => {
           <Col>{username || "usename"}</Col>
         </Dropdown>
       </Row>
-      <UploadTrackModal opened={isUploadTrackModalOpen} setOpened={setIsUploadTrackModalOpen} />
+      <UploadTrackModal
+        opened={isUploadTrackModalOpen}
+        setOpened={setIsUploadTrackModalOpen}
+      />
     </AntHeader>
   );
 };

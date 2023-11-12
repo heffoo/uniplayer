@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "./axios";
+import axios from "./axios";
 
 interface LoginParams {
   username: string;
@@ -22,6 +22,6 @@ export async function registerUser(params: LoginParams) {
 }
 
 export async function me() {
-  const data = await axios.get<LoginParams, any>("/users/me");
+  const data = await axios.get("/users/me");
   return data;
 }

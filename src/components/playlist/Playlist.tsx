@@ -7,7 +7,6 @@ import {
   Space,
   Typography,
 } from "antd";
-import { tracks } from "../../api/mocks";
 import "./playlist.scss";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { PlayPause } from "../shared/PlayPause";
@@ -22,6 +21,10 @@ export const Playlist = () => {
   const currentPlaylist = useAppSelector(
     (state) => state.playlist.currentPlaylist
   );
+  const tracks = useAppSelector((state) => state.playlist.tracks);
+  {
+    console.log(tracks);
+  }
 
   const openTrackInfo = async () => {
     await dispatch(setDrawerOpened());
@@ -49,10 +52,14 @@ export const Playlist = () => {
 
   return (
     <div className="playlist-content">
-      <Title className="playlist-name" level={3}>
-        {currentPlaylist?.title || "Все песни"}
-      </Title>
-      <Divider className="playlist-divider" />
+      <Col offset={2}>
+        <Title className="playlist-name" level={3}>
+          {currentPlaylist?.title || "Все песни"}
+        </Title>
+        <Col span={6}>
+          <Divider className="playlist-divider" />
+        </Col>
+      </Col>
       <Col>
         {tracks.map((track) => (
           <Row

@@ -31,14 +31,15 @@ export const LoginPage = () => {
         password: formValues.password,
       })
         .then(() => localStorage.setItem("isUserLogged", "true"))
+        .then(setUserName)
         .then(() => window.location.reload());
     } else {
       setPasswordIsDifferent(true);
     }
   };
 
-  const setUserName = async () => {
-    // await me().then((resp) => localStorage.setItem("username", resp.username));
+  const setUserName = () => {
+    me().then((resp) => console.log("me, resp"));
   };
 
   const login = () => {
@@ -48,8 +49,8 @@ export const LoginPage = () => {
       username: formValues.username,
       password: formValues.password,
     })
-      .then(() => localStorage.setItem("isUserLogged", "true"))
       .then(setUserName)
+      .then(() => localStorage.setItem("isUserLogged", "true"))
       .then(() => window.location.reload());
   };
 

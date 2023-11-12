@@ -19,14 +19,20 @@
 }
 
 .upload-track-form {
-  &__item {
+  &__input {
     border-radius: 0;
     width: 300px;
   }
+
+  &__item > .ant-form-item-row > .ant-form-item-label > label {
+    color: colors.$gray-5;
+  }
+
   &__cover.ant-upload-wrapper.ant-upload-picture-card-wrapper
     .ant-upload.ant-upload-select {
     width: 150px;
     height: 150px;
-    margin: 30px;
+    margin: 0 30px 0 2px;
+    background-color: colors.$gray-4;
   }
 }
