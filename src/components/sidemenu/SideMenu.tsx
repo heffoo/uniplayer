@@ -10,61 +10,53 @@ import { radio_stations } from "../../api/mocks";
 import "./side-menu.scss";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { Playlist, RadioStation } from "../../types";
-import { Row } from "antd";
-import { setPlaylist, setTracksFromPlaylist } from "../../store/playlistSlice";
+import { Col, Row } from "antd";
+import { setPlaylist, setPlaylists, setTracksFromPlaylist } from "../../store/playlistSlice";
 import classNames from "classnames";
 import { playTrack, setTrack } from "../../store/trackSlice";
 import { BinIcon, PlusIcon } from "../../assets/icons";
 import {
   createPlaylist,
+  deletePlaylist,
   getPlaylists,
   getTracksFromPlaylist,
   updatePlaylist,
 } from "../../api/playlists";
+import { setRadioIsPlaying } from "../../store/uiSlice";
 
 export const SideMenu = () => {
   const currentPlaylist = useAppSelector(
     (state) => state.playlist.currentPlaylist
   );
+  const playlists = useAppSelector((state) => state.playlist.allPlaylists);
+
   const [pagination] = useState({ offset: 0, limit: 100 });
   const [showPlaylists, setShowPlaylists] = useState<boolean>(true);
-  const [onPlaylistHover, setOnPlaylistHover] = useState<boolean>(false);
   const [isPlaylistCreating, setPlaylistCreating] = useState(false);
-  const [playlists, setPlaylists] = useState<Playlist[]>([]);
+  // const [playlists, setAllPlaylists] = useState<Playlist[]>([]);
   const [editingPlaylist, setEditingPlaylist] = useState("");
+  const [hoveringPlaylist, setHoveringPlaylist] = useState("");
   const dispatch = useAppDispatch();
 
   const getAllPlaylists = useCallback(async () => {
     const { data } = await getPlaylists(pagination);
-    setPlaylists(data.items);
-  }, [pagination]);
+    dispatch(setPlaylists(data.items));
+    // setAllPlaylists(data.items);
+  }, [dispatch, pagination]);
 
   useEffect(() => {
     getAllPlaylists();
   }, [getAllPlaylists]);
 
-  const allPlaylists = useMemo(() => {
-    return [
-      {
-        id: "1234",
-        title: "Все песни",
-        tracks: [],
-      },
-      {
-        id: "2234",
-        title: "Любимое",
-        tracks: [],
-      },
-      ...playlists,
-    ];
-  }, [playlists]);
-
-  const setCurrentPlaylist = (playlist: Playlist) => {
-    getTracksFromPlaylist(playlist.id).then((resp) =>
-      dispatch(setTracksFromPlaylist(resp.data.items))
-    );
-    dispatch(setPlaylist(playlist));
-  };
+  const setCurrentPlaylist = useCallback(
+    (playlist: Playlist) => {
+      getTracksFromPlaylist(playlist.id).then((resp) =>
+        dispatch(setTracksFromPlaylist(resp.data.items))
+      );
+      dispatch(setPlaylist(playlist));
+    },
+    [dispatch]
+  );
 
   const setActivePlaylist = (playlist: Playlist) => {
     if (currentPlaylist) {
@@ -89,10 +81,15 @@ export const SideMenu = () => {
     [getAllPlaylists]
   );
 
-  const playRadioStation = async (radio_station: RadioStation) => {
+  const playRadioStation = useCallback(async (radio_station: RadioStation) => {
     await dispatch(setTrack(radio_station));
-    dispatch(playTrack());
-  };
+    dispatch(playTrack("radio"));
+    dispatch(setRadioIsPlaying());
+  }, [dispatch]);
+
+  const removePlaylist = useCallback((id: string) => {
+    deletePlaylist(id).then(getAllPlaylists);
+  },[getAllPlaylists]);
 
   return (
     <div className="side-menu">
@@ -121,8 +118,8 @@ export const SideMenu = () => {
                   "side-menu__item--active": setActivePlaylist(playlist),
                 })}
                 onClick={() => setCurrentPlaylist(playlist)}
-                onMouseOver={() => setOnPlaylistHover(true)}
-                onMouseLeave={() => setOnPlaylistHover(false)}
+                onMouseOver={() => setHoveringPlaylist(playlist.id)}
+                onMouseLeave={() => setHoveringPlaylist('')}
               >
                 <span onDoubleClick={() => setEditingPlaylist(playlist.id)}>
                   {editingPlaylist === playlist.id ? (
@@ -138,9 +135,15 @@ export const SideMenu = () => {
                     playlist.title
                   )}
                 </span>
-                {/* {onPlaylistHover && (
-                  <img className="bin-icon" alt="bin" src={BinIcon} />
-                )} */}
+                {hoveringPlaylist === playlist.id && (
+                  <Row justify="space-around">
+                    <button
+                      className="delete-playlist-button"
+                      onClick={() => removePlaylist(playlist.id)}
+                    />
+                    <img className="bin-icon" alt="bin" src={BinIcon} />
+                  </Row>
+                )}
               </Row>
             ))}
             <Row justify="center">

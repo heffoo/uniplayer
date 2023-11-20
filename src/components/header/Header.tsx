@@ -5,12 +5,14 @@ import { Header as AntHeader } from "antd/es/layout/layout";
 import "./header.scss";
 import { UploadIcon } from "../../assets/icons";
 import { UploadTrackModal } from "../UploadTrackModal";
+import { logoutUser } from "../../api/login";
 
 export const Header = () => {
   const [isUploadTrackModalOpen, setIsUploadTrackModalOpen] = useState(false);
-  const username = localStorage.getItem("username");
+  // const username = localStorage.getItem("username");
   const logOut = () => {
     localStorage.removeItem("isUserLogged");
+    logoutUser();
     window.location.reload();
   };
 
@@ -39,7 +41,7 @@ export const Header = () => {
           </button>
         </Tooltip>
         <Dropdown overlayClassName="settings-dropdown" menu={{ items }}>
-          <Col>{username || "usename"}</Col>
+          <Col>Настройки</Col>
         </Dropdown>
       </Row>
       <UploadTrackModal

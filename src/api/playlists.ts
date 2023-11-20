@@ -42,14 +42,27 @@ export async function updatePlaylist(id: string, title: string) {
   return data;
 }
 
-export async function deletePlaylist(params: GetPlaylistsParams) {
-  const data = await axios.delete(`/playlists`, {
-    params,
-  });
+export async function deletePlaylist(id: string) {
+  const data = await axios.delete(`/playlists/${id}`);
   return data;
 }
 
 export async function getTracksFromPlaylist(id: string) {
   const data = await axios.get(`/playlists/${id}/tracks`);
   return data;
+}
+
+export async function getTrackInfo(id: string) {
+  const data = await axios.get(`/playlists/${id}/tracks`);
+  return data;
+}
+
+export async function addTrackToPlaylist(id: string, trackId: string) {
+  await axios.post(`/playlists/${id}/tracks`, {
+    trackId,
+  });
+}
+
+export async function removeTrackFromPlaylist(id: string, trackId: string) {
+  await axios.delete(`/playlists/${id}/tracks/${trackId}`);
 }

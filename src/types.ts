@@ -3,11 +3,10 @@ export type Track = {
   title: string;
   singerName: string;
   albumName: string;
+  duration: number;
   coverFileId: string;
   albumFileId: string;
-  src?: string; //TODO: temporary while no backend
-  cover?: string; //TODO: temporary while no backend
-  // src?: string; //TODO: temporary while no backend
+  trackFileId: string;
 };
 
 export type Playlist = {

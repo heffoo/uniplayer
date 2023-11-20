@@ -13,6 +13,10 @@ export async function loginUser(params: LoginParams) {
   return data;
 }
 
+export async function logoutUser() {
+  await axios.post("/signout");
+}
+
 export async function registerUser(params: LoginParams) {
   const data = await axios.post("/registration", {
     username: params.username,

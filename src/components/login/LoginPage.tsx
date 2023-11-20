@@ -15,11 +15,12 @@ import classNames from "classnames";
 import { loginUser, me, registerUser } from "../../api/login";
 import { useForm } from "antd/es/form/Form";
 
-const { Link } = Typography;
+const { Link, Text } = Typography;
 
 export const LoginPage = () => {
   const [authType, setAuthType] = useState<"register" | "auth">("register");
   const [passwordIsDifferent, setPasswordIsDifferent] = useState(false);
+  const [userIsAlreadyExist, setUserIsAlreadyExist] = useState(false);
   const [form] = useForm();
 
   const register = () => {
@@ -31,16 +32,22 @@ export const LoginPage = () => {
         password: formValues.password,
       })
         .then(() => localStorage.setItem("isUserLogged", "true"))
-        .then(setUserName)
-        .then(() => window.location.reload());
+        .then(login)
+        // .then(setUserName)
+        .then(() => window.location.reload())
+        .catch((err) => {
+          if (err?.response?.status === 409) {
+            setUserIsAlreadyExist(true);
+          }
+        });
     } else {
       setPasswordIsDifferent(true);
     }
   };
 
-  const setUserName = () => {
-    me().then((resp) => console.log("me, resp"));
-  };
+  // const setUserName = () => {
+  //   me().then((resp) => console.log("me", resp));
+  // };
 
   const login = () => {
     const formValues = form.getFieldsValue();
@@ -49,7 +56,7 @@ export const LoginPage = () => {
       username: formValues.username,
       password: formValues.password,
     })
-      .then(setUserName)
+      // .then(setUserName)
       .then(() => localStorage.setItem("isUserLogged", "true"))
       .then(() => window.location.reload());
   };
@@ -96,10 +103,31 @@ export const LoginPage = () => {
                 layout="vertical"
                 className="register-form"
               >
-                <Form.Item label="Логин" name="username">
+                <Form.Item
+                  label="Логин"
+                  name="username"
+                  rules={[
+                    {
+                      min: 4,
+                      message:
+                        "Имя пользователя должно быть равно 4 или более символов",
+                      validateTrigger: "onBlur",
+                    },
+                  ]}
+                >
                   <Input placeholder="Логин" />
                 </Form.Item>
-                <Form.Item label="Пароль" name="password">
+                <Form.Item
+                  label="Пароль"
+                  name="password"
+                  rules={[
+                    {
+                      min: 6,
+                      message: "Пароль должен быть равен 6 или более символов",
+                      validateTrigger: "onBlur",
+                    },
+                  ]}
+                >
                   <Input placeholder="Пароль" type="password" />
                 </Form.Item>
                 <Form.Item
@@ -111,6 +139,11 @@ export const LoginPage = () => {
                 >
                   <Input placeholder="Пароль" type="password" />
                 </Form.Item>
+                {userIsAlreadyExist && (
+                  <Text type="danger">
+                    Пользователь с таким именем уже существует
+                  </Text>
+                )}
               </Form>
             ) : (
               <Form

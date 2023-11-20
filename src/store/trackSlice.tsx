@@ -20,8 +20,11 @@ const trackSlice = createSlice({
     setTrack: (state, action) => {
       state.currentTrack = action.payload;
     },
-    playTrack: (state) => {
+    playTrack: (state, action) => {
       state.isPlaying = true;
+      if (state.currentTrack && action.payload !== "radio") {
+        state.currentTrack.trackFileId = action.payload;
+      }
       audio.current?.play();
     },
     pauseTrack: (state) => {

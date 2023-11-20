@@ -22,8 +22,8 @@ export const TrackInfoBlock = () => {
           <img
             className="track-info-drawer__cover"
             alt="img"
-            src={currentTrack?.cover}
-          ></img>
+            src={`data:image/png;base64, ${currentTrack?.trackFileId}`}
+          />
           <Row className="track-info-drawer__singer">
             {currentTrack?.singerName}
           </Row>
@@ -31,7 +31,7 @@ export const TrackInfoBlock = () => {
           <Row className="track-info-drawer__album">
             {currentTrack?.albumName}
           </Row>
-          <Row className="track-info-drawer__duration">3:35</Row>
+          <Row className="track-info-drawer__duration">{currentTrack?.duration}</Row>
           <Divider className="track-info-drawer__divider" />
         </Space>
       </Col>

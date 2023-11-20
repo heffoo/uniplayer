@@ -34,6 +34,9 @@
   &__button {
     color: colors.$gray-1;
     padding: 0 5px;
+    &--filled {
+      transform: scale(0.75);
+    }
   }
 }
 
@@ -53,6 +56,7 @@
 
 .settings-dropdown.ant-dropdown > .ant-dropdown-menu {
   background-color: colors.$gray-2;
+  margin-top: -20px;
 }
 .settings-dropdown.ant-dropdown > .ant-dropdown-menu > .ant-dropdown-menu-item {
   color: colors.$gray-5;
