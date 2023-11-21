@@ -11,7 +11,11 @@ import "./side-menu.scss";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { Playlist, RadioStation } from "../../types";
 import { Col, Row } from "antd";
-import { setPlaylist, setPlaylists, setTracksFromPlaylist } from "../../store/playlistSlice";
+import {
+  setPlaylist,
+  setPlaylists,
+  setTracksFromPlaylist,
+} from "../../store/playlistSlice";
 import classNames from "classnames";
 import { playTrack, setTrack } from "../../store/trackSlice";
 import { BinIcon, PlusIcon } from "../../assets/icons";
@@ -81,15 +85,22 @@ export const SideMenu = () => {
     [getAllPlaylists]
   );
 
-  const playRadioStation = useCallback(async (radio_station: RadioStation) => {
-    await dispatch(setTrack(radio_station));
-    dispatch(playTrack("radio"));
-    dispatch(setRadioIsPlaying());
-  }, [dispatch]);
+  const playRadioStation = useCallback(
+    async (radio_station: RadioStation) => {
+      await dispatch(setTrack(radio_station));
+      dispatch(playTrack("radio"));
+      dispatch(setRadioIsPlaying());
+    },
+    [dispatch]
+  );
 
-  const removePlaylist = useCallback((id: string) => {
-    deletePlaylist(id).then(getAllPlaylists);
-  },[getAllPlaylists]);
+  const removePlaylist = useCallback(
+    (id: string) => {
+      console.log(1);
+      deletePlaylist(id).then(getAllPlaylists);
+    },
+    [getAllPlaylists]
+  );
 
   return (
     <div className="side-menu">
@@ -119,7 +130,7 @@ export const SideMenu = () => {
                 })}
                 onClick={() => setCurrentPlaylist(playlist)}
                 onMouseOver={() => setHoveringPlaylist(playlist.id)}
-                onMouseLeave={() => setHoveringPlaylist('')}
+                onMouseLeave={() => setHoveringPlaylist("")}
               >
                 <span onDoubleClick={() => setEditingPlaylist(playlist.id)}>
                   {editingPlaylist === playlist.id ? (
@@ -135,15 +146,18 @@ export const SideMenu = () => {
                     playlist.title
                   )}
                 </span>
-                {hoveringPlaylist === playlist.id && (
-                  <Row justify="space-around">
-                    <button
-                      className="delete-playlist-button"
-                      onClick={() => removePlaylist(playlist.id)}
-                    />
-                    <img className="bin-icon" alt="bin" src={BinIcon} />
-                  </Row>
-                )}
+                {hoveringPlaylist === playlist.id &&
+                  playlist.title !== "Любимое" &&
+                  playlist.title !== "Все треки" && (
+                    <Row justify="space-around">
+                      <button
+                        className="delete-playlist-button"
+                        onClick={() => removePlaylist(playlist.id)}
+                      >
+                        <img className="bin-icon" alt="bin" src={BinIcon} />
+                      </button>
+                    </Row>
+                  )}
               </Row>
             ))}
             <Row justify="center">

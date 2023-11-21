@@ -1,4 +1,4 @@
-import { Col, Row, Space, Typography } from "antd";
+import { Col, Row, Space, Tooltip, Typography } from "antd";
 
 import {
   SyntheticEvent,
@@ -44,7 +44,7 @@ import { setFavoritePlaylistTracks } from "../../store/playlistSlice";
 //максимум - https://maximum.hostingradio.ru/maximum96.aacp
 export const audio = createRef<HTMLAudioElement>();
 
-const { Link } = Typography;
+const { Link, Text } = Typography;
 
 export const Player = () => {
   const [progressBarPercent, setProgressBarPercent] = useState(0);
@@ -80,7 +80,6 @@ export const Player = () => {
     await dispatch(setTrack(prevTrack));
     getTrack(prevTrack?.trackFileId);
     dispatch(playTrack(prevTrack?.trackFileId));
-    // play(index === 0 ? tracks[tracks.length - 1] : tracks[index - 1]);
   };
 
   const nextTrack = async () => {
@@ -89,7 +88,6 @@ export const Player = () => {
     await dispatch(setTrack(nextTrack));
     getTrack(nextTrack?.trackFileId);
     dispatch(playTrack(nextTrack?.trackFileId));
-    // play(index > tracks.length - 2 ? tracks[0] : tracks[index + 1]);
   };
 
   const progressBar = () => {
@@ -175,7 +173,11 @@ export const Player = () => {
       <Col span={4}>
         <audio
           ref={audio}
-          src={`http://localhost:3000/track-files/${currentTrack?.trackFileId}`}
+          src={
+            currentTrack && "src" in currentTrack
+              ? `${currentTrack.src}`
+              : `http://localhost:3000/track-files/${currentTrack?.trackFileId}`
+          }
           autoPlay={false}
           onEnded={nextTrack}
           onLoadedMetadata={calculateDuration}
@@ -194,14 +196,26 @@ export const Player = () => {
                 <img
                   className="track-logo"
                   alt="logo"
-                  src={`http://localhost:3000/cover-files/${currentTrack.coverFileId}`}
+                  src={
+                    currentTrack && "cover" in currentTrack
+                      ? `${currentTrack.cover}`
+                      : currentTrack.coverFileId
+                      ? `http://localhost:3000/cover-files/${currentTrack.coverFileId}`
+                      : "./assets/No_cover.png"
+                  }
                 />
               </Col>
               <Col className="player__track-info">
                 <Row>
-                  <Link className="track-title" onClick={openTrackInfo}>
-                    {currentTrack.title}
-                  </Link>
+                  <Tooltip title={currentTrack.title}>
+                    <Link
+                      className="track-title"
+                      onClick={openTrackInfo}
+                      ellipsis
+                    >
+                      {currentTrack.title}
+                    </Link>
+                  </Tooltip>
                   <AddToFavorite
                     trackId={currentTrack.id}
                     favoritePlaylistTracks={favoritePlaylistTracks}
@@ -210,9 +224,9 @@ export const Player = () => {
                   />
                 </Row>
                 <Row>
-                  <Typography.Text className="track-singer">
+                  <Text className="track-singer" ellipsis>
                     {currentTrack.singerName}
-                  </Typography.Text>
+                  </Text>
                 </Row>
               </Col>
             </Row>

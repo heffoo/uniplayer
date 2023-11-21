@@ -26,13 +26,9 @@ export const AddToFavorite = ({
     (state) => state.playlist.currentPlaylist
   );
   const dispatch = useAppDispatch();
-//   console.log(
-//     trackId,
-//     favoritePlaylistTracks,
-//     favoritePlaylistId,
-//     getFavoritesTracks
-//   );
+
   const addToFavoritePlaylist = useCallback(async () => {
+    console.log(favoritePlaylistId)
     favoritePlaylistId &&
       (await addTrackToPlaylist(favoritePlaylistId, trackId));
     if (currentPlaylist) {
@@ -49,6 +45,7 @@ export const AddToFavorite = ({
   ]);
 
   const removeFromFavorite = useCallback(async () => {
+    console.log(222)
     favoritePlaylistId &&
       (await removeTrackFromPlaylist(favoritePlaylistId, trackId));
     if (currentPlaylist) {

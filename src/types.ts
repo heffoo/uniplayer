@@ -7,6 +7,7 @@ export type Track = {
   coverFileId: string;
   albumFileId: string;
   trackFileId: string;
+  playlistIds: string[]
 };
 
 export type Playlist = {

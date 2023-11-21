@@ -11,6 +11,7 @@ interface GetTrackMeta {
   title?: string;
   album?: string;
   picture: { data: any }[];
+  duration?: number;
 }
 
 interface UploadTrackParams {

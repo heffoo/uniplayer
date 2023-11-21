@@ -5,11 +5,13 @@ import { audio } from "../components/player/Player";
 interface TrackState {
   currentTrack: Track | null;
   isPlaying: boolean;
+  isRadioPlaying: boolean;
 }
 
 const initialState: TrackState = {
   currentTrack: null,
   isPlaying: false,
+  isRadioPlaying: false,
 };
 
 const trackSlice = createSlice({
@@ -17,6 +19,12 @@ const trackSlice = createSlice({
   initialState,
 
   reducers: {
+    setIsRadioPlaying: (state) => {
+      state.isRadioPlaying = true;
+    },
+    setIsRadioNotPlaying: (state) => {
+      state.isRadioPlaying = false;
+    },
     setTrack: (state, action) => {
       state.currentTrack = action.payload;
     },
@@ -34,5 +42,5 @@ const trackSlice = createSlice({
   },
 });
 
-export const { setTrack, playTrack, pauseTrack } = trackSlice.actions;
+export const { setTrack, playTrack, pauseTrack, setIsRadioPlaying, setIsRadioNotPlaying } = trackSlice.actions;
 export default trackSlice.reducer;

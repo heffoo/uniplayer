@@ -16,13 +16,19 @@ import {
   removeTrackFromPlaylist,
 } from "../../api/playlists";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { setFavoritePlaylistTracks, setPlaylist, setTracksFromPlaylist } from "../../store/playlistSlice";
+import {
+  setFavoritePlaylistTracks,
+  setPlaylist,
+  setTracksFromPlaylist,
+} from "../../store/playlistSlice";
 import { Playlist as PlaylistType, Track } from "../../types";
 import { EditTrackModal } from "../EditTrackModal";
 import { AddToFavorite } from "../AddToFavorite";
+import { AddToPlaylistModal } from "../AddToPlaylistModal";
+import { RemoveFromPlaylistModal } from "../RemoveFromPlaylist";
 
 const { Title, Text } = Typography;
-//добавить в плейлист, отредактировать, удалить
+
 export const Playlist = () => {
   const [selectedTrack, setSelectedTrack] = useState("");
   const currentPlaylist = useAppSelector(
@@ -33,6 +39,9 @@ export const Playlist = () => {
   );
 
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [addToPlaylistModalOpen, setAddToPlaylistModalOpen] = useState(false);
+  const [removeFromPlaylistModalOpen, setRemoveFromPlaylistModalOpen] =
+    useState(false);
 
   const tracks = useAppSelector((state) => state.playlist.tracks);
   const playlists = useAppSelector((state) => state.playlist.allPlaylists);
@@ -48,6 +57,16 @@ export const Playlist = () => {
     [dispatch]
   );
 
+  function secondsToTime(seconds: number) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+
+    const formattedSeconds =
+      remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds;
+
+    return `${minutes}:${formattedSeconds}`;
+  }
+
   const favoritePlaylistId = useMemo(
     () => playlists.find((playlist) => playlist.title === "Любимое")?.id || "",
     [playlists]
@@ -55,9 +74,9 @@ export const Playlist = () => {
 
   const getFavoritesTracks = useCallback(() => {
     favoritePlaylistId &&
-      getTracksFromPlaylist(favoritePlaylistId).then((resp) =>{
-        dispatch(setFavoritePlaylistTracks(resp.data.items))}
-      );
+      getTracksFromPlaylist(favoritePlaylistId).then((resp) => {
+        dispatch(setFavoritePlaylistTracks(resp.data.items));
+      });
   }, [dispatch, favoritePlaylistId]);
 
   useEffect(() => {
@@ -86,6 +105,7 @@ export const Playlist = () => {
         </Space>
       ),
       key: "0",
+      onClick: () => setAddToPlaylistModalOpen(true),
     },
     {
       label: "Редактировать",
@@ -97,6 +117,11 @@ export const Playlist = () => {
       key: "3",
       onClick: onDeleteTrack,
     },
+    // {
+    //   label: "Удалить из плейлиста",
+    //   key: "4",
+    //   onClick: () => setRemoveFromPlaylistModalOpen(true),
+    // },
   ];
 
   return (
@@ -130,8 +155,9 @@ export const Playlist = () => {
               </Col>
             </Row>
             <Row align="middle" justify="space-around">
-              {/* //TODO: change with backend */}
-              <Text className="playlist-song__button">{track.duration}</Text>
+              <Text className="playlist-song__button">
+                {secondsToTime(track.duration)}
+              </Text>
               <AddToFavorite
                 trackId={track.id}
                 favoritePlaylistTracks={favoritePlaylistTracks}
@@ -155,6 +181,20 @@ export const Playlist = () => {
                 <EditTrackModal
                   opened={editModalOpen}
                   setOpened={setEditModalOpen}
+                  track={track}
+                />
+              )}
+              {selectedTrack === track.id && (
+                <AddToPlaylistModal
+                  opened={addToPlaylistModalOpen}
+                  setOpened={setAddToPlaylistModalOpen}
+                  track={track}
+                />
+              )}
+              {selectedTrack === track.id && (
+                <RemoveFromPlaylistModal
+                  opened={removeFromPlaylistModalOpen}
+                  setOpened={setRemoveFromPlaylistModalOpen}
                   track={track}
                 />
               )}

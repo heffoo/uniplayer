@@ -39,10 +39,8 @@ export const UploadTrackModal = ({
   const [trackFileId, setTrackFileId] = useState("");
   const [trackDefaultName, setTrackDefaultName] = useState("");
   const [uploadedPicture, setUploadedPicture] = useState<any>(null);
-  const [pictureId, setPictureId] = useState<string>("");
-  const currentPlaylist = useAppSelector(
-    (state) => state.playlist.currentPlaylist
-  );
+  const [pictureId, setPictureId] = useState<any>(null);
+  const [duration, setDuration] = useState<number>(0);
 
   const upload = async () => {
     form.validateFields();
@@ -51,7 +49,7 @@ export const UploadTrackModal = ({
       await uploadTrackFile({
         title: formValues.title,
         singerName: formValues.singerName,
-        duration: formValues.duration,
+        duration: Math.floor(duration),
         albumName: formValues.album,
         trackFileId: trackFileId,
         coverFileId: pictureId,
@@ -103,8 +101,9 @@ export const UploadTrackModal = ({
     form.setFieldValue("singerName", trackMeta.data.artist);
     form.setFieldValue("title", trackMeta.data.title);
     form.setFieldValue("album", trackMeta.data.album);
-    setUploadedPicture(trackMeta.data.picture);
-    if (!pictureId || uploadedPicture) {
+    trackMeta.data.duration && setDuration(trackMeta.data.duration);
+    !!trackMeta.data.picture && setUploadedPicture(trackMeta.data.picture);
+    if (!pictureId && trackMeta.data.picture) {
       const coverFormData = new FormData();
       const coverData = dataURLtoFile(
         `data:image/png;base64, ${trackMeta.data.picture}`
@@ -220,4 +219,3 @@ export const UploadTrackModal = ({
     </Modal>
   );
 };
-

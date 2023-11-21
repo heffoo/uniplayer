@@ -51,11 +51,13 @@
 }
 
 .track-title.ant-typography {
+  max-width: 120px;
   color: colors.$gray-4;
   text-decoration: underline;
 }
 
 .track-singer {
+  max-width: 130px;
   color: colors.$gray-5;
 }
 

@@ -156,7 +156,7 @@ export const LoginPage = () => {
                   <Input placeholder="Логин" />
                 </Form.Item>
                 <Form.Item label="Пароль" name="password">
-                  <Input placeholder="Пароль" />
+                  <Input placeholder="Пароль" type="password" />
                 </Form.Item>
                 {/* <Row justify="center">
                   <Link className="forgot-password-link">Забыли пароль?</Link>
